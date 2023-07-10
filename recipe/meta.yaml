@@ -1,8 +1,5 @@
 {% set name = "cornac" %}
 {% set version = "1.15.4" %}
-{% set sha256 = "8b9b280467a8ef07665d027de2ad40bac8ee432460aeb4e39313a5f0ed9a2063" %}
-{% set build = 0 %}
-
 
 package:
   name: {{ name|lower }}
@@ -10,12 +7,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 8b9b280467a8ef07665d027de2ad40bac8ee432460aeb4e39313a5f0ed9a2063
 
 build:
-  skip: true  # [py<35]
-  number: {{ build }}
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: True  # [py<38]
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -30,6 +27,8 @@ requirements:
     - numpy
     # some models cimports scipy.linalg.cython_blas
     - scipy
+    - wheel
+    - setuptools
   run:
     - llvm-openmp  # [osx]
     - python
@@ -41,12 +40,20 @@ requirements:
 test:
   imports:
     - cornac
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
   home: https://cornac.preferred.ai/
   license: Apache-2.0
   license_file: LICENSE
   summary: A Comparative Framework for Multimodal Recommender Systems
+  description: |
+    Cornac is a comparative framework for multimodal recommender systems.
+    Cornac enables fast experiments and straightforward implementations of new models.
+    It is highly compatible with existing machine learning libraries (e.g., TensorFlow, PyTorch).
   doc_url: https://cornac.readthedocs.io/en/latest/
   dev_url: https://github.com/PreferredAI/cornac
 
