@@ -18,9 +18,9 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx and arm64]
   host:
-    - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx and arm64]
     - python
     - pip
     - cython
@@ -30,7 +30,7 @@ requirements:
     - wheel
     - setuptools
   run:
-    - llvm-openmp  # [osx]
+    - llvm-openmp  # [osx and arm64]
     - python
     - {{ pin_compatible('numpy') }}
     - {{ pin_compatible('scipy') }}
