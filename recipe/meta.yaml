@@ -52,12 +52,13 @@ about:
   home: https://cornac.preferred.ai/
   license: Apache-2.0
   license_file: LICENSE
+  license_family: Apache
   summary: A Comparative Framework for Multimodal Recommender Systems
   description: |
     Cornac is a comparative framework for multimodal recommender systems.
     Cornac enables fast experiments and straightforward implementations of new models.
     It is highly compatible with existing machine learning libraries (e.g., TensorFlow, PyTorch).
-  doc_url: https://cornac.readthedocs.io/en/latest/
+  doc_url: https://cornac.readthedocs.io
   dev_url: https://github.com/PreferredAI/cornac
 
 extra:
