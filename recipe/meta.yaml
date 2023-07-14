@@ -23,10 +23,10 @@ requirements:
     - llvm-openmp  # [osx and arm64]
     - python
     - pip
-    - cython {{ cython }}
+    - cython 0.29.35
     - numpy {{ numpy }}
     # some models cimports scipy.linalg.cython_blas
-    - scipy {{ scipy }}
+    - scipy 1.10.1
     - wheel
     - setuptools
     - libgomp  # [linux]
