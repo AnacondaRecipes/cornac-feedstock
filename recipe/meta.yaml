@@ -13,8 +13,7 @@ build:
   skip: True  # [py<38]
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  # missing_dso_whitelist:     # [win64]
-  #   - '_openmp_mutex'     # [win64]
+
 requirements:
   build:
     - {{ compiler('c') }}
@@ -24,10 +23,10 @@ requirements:
     - llvm-openmp  # [osx and arm64]
     - python
     - pip
-    - cython
-    - numpy
+    - cython {{ cython }}
+    - numpy {{ numpy }}
     # some models cimports scipy.linalg.cython_blas
-    - scipy
+    - scipy {{ scipy }}
     - wheel
     - setuptools
     - libgomp  # [linux]
