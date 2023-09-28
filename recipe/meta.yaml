@@ -11,7 +11,7 @@ source:
 
 build:
   skip: True  # [py<38]
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
@@ -23,7 +23,7 @@ requirements:
     - llvm-openmp  # [osx and arm64]
     - python
     - pip
-    - cython 0.29.35
+    - cython 0.29
     - numpy {{ numpy }}
     # some models cimports scipy.linalg.cython_blas
     - scipy 1.10.1
