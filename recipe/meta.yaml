@@ -1,5 +1,5 @@
 {% set name = "cornac" %}
-{% set version = "1.15.4" %}
+{% set version = "1.16.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 8b9b280467a8ef07665d027de2ad40bac8ee432460aeb4e39313a5f0ed9a2063
+  sha256: 6c2da5e42fbd0a9c4f304bb415d5694c23c625a1bee5b892bc80d50e28634b9c
 
 build:
   skip: True  # [py<38]
-  number: 1
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
@@ -26,7 +26,8 @@ requirements:
     - cython 0.29
     - numpy {{ numpy }}
     # some models cimports scipy.linalg.cython_blas
-    - scipy 1.10.1
+    - scipy 1.10.1 # [py<312]
+    - scipy 1.11   # [py==312]
     - wheel
     - setuptools
     - libgomp  # [linux]
@@ -35,6 +36,7 @@ requirements:
     - python
     - {{ pin_compatible('numpy') }}
     - {{ pin_compatible('scipy') }}
+    - scipy
     - libgomp  # [linux]
     - tqdm >=4.19
     - powerlaw
