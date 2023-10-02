@@ -36,7 +36,6 @@ requirements:
     - python
     - {{ pin_compatible('numpy') }}
     - {{ pin_compatible('scipy') }}
-    - scipy
     - libgomp  # [linux]
     - tqdm >=4.19
     - powerlaw
