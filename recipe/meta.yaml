@@ -1,5 +1,5 @@
 {% set name = "cornac" %}
-{% set version = "1.16.0" %}
+{% set version = "2.2.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,15 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 6c2da5e42fbd0a9c4f304bb415d5694c23c625a1bee5b892bc80d50e28634b9c
+  sha256: ada6d09bd78bbd5b7cd65d2eb8599146e4b8f52ef44651cb25fa6a019d36aa56
 
 build:
-  skip: True  # [py<38]
+  skip: True  # [py<38 or py>312]
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script:
+    # https://github.com/PreferredAI/cornac/blob/v2.2.2/setup.py#L328
+    # - {{ PYTHON }} setup.py build_ext -j{{ CPU_COUNT }}
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -23,7 +26,7 @@ requirements:
     - llvm-openmp  # [osx and arm64]
     - python
     - pip
-    - cython 0.29
+    - cython
     - numpy {{ numpy }}
     # some models cimports scipy.linalg.cython_blas
     - scipy 1.10.1 # [py<312]
@@ -36,17 +39,25 @@ requirements:
     - python
     - {{ pin_compatible('numpy') }}
     - {{ pin_compatible('scipy') }}
+    - numpy <2.0.0
+    - scipy <=1.13.1
     - libgomp  # [linux]
-    - tqdm >=4.19
+    - tqdm
     - powerlaw
 
 test:
   imports:
     - cornac
-  commands:
-    - pip check
   requires:
     - pip
+    - pytest
+    # - pytest-pep8 # unavailable
+    - pytest-xdist
+  # source_files:
+  #   - tests
+  #   - pytest.ini
+  commands:
+    - pip check
 
 about:
   home: https://cornac.preferred.ai/
