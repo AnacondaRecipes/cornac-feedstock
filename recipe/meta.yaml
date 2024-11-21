@@ -6,8 +6,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ada6d09bd78bbd5b7cd65d2eb8599146e4b8f52ef44651cb25fa6a019d36aa56
+  - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+    sha256: ada6d09bd78bbd5b7cd65d2eb8599146e4b8f52ef44651cb25fa6a019d36aa56
+  - url: https://github.com/PreferredAI/cornac/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 1a4b9839ce6e697155c3ef1b4d85d582a316cef93f24e7157e9275422e021e9b
+    folder: gh_src
 
 build:
   skip: True  # [py<38 or py>312]
@@ -39,6 +42,7 @@ requirements:
     - python
     - {{ pin_compatible('numpy') }}
     - {{ pin_compatible('scipy') }}
+    # add furher pinnings for numpy and scipy
     - numpy <2.0.0
     - scipy <=1.13.1
     - libgomp  # [linux]
@@ -53,11 +57,15 @@ test:
     - pytest
     # - pytest-pep8 # unavailable
     - pytest-xdist
-  # source_files:
-  #   - tests
-  #   - pytest.ini
+    # required to test the models (not mentioned in the requirements)
+    - flask
+  source_files:
+    - gh_src/tests
+    - gh_src/pytest.ini
   commands:
     - pip check
+    - cd gh_src
+    - pytest -vv tests
 
 about:
   home: https://cornac.preferred.ai/
