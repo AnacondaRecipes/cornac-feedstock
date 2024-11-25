@@ -42,8 +42,6 @@ requirements:
   run:
     - llvm-openmp  # [osx and arm64]
     - python
-    - {{ pin_compatible('numpy') }}
-    - {{ pin_compatible('scipy') }}
     # add furher pinnings for numpy and scipy
     - numpy <2.0.0
     - scipy <=1.13.1
