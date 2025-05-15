@@ -9,17 +9,16 @@ source:
   - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
     sha256: 6253d932c7fd65126c3be948134e5d04ecb756f7bf79a081ec0e32dc0dd1df39
   # for upstream tests and their pytest.ini
-  - url: https://github.com/PreferredAI/cornac/archive/refs/tags/v{{ version }}.tar.gz
+  - url: https://github.com/PreferredAI/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
     sha256: 84aaac09e6a198700a8450681c67087cbe3aeaa4b37d3419b323ae09f0d97621
     folder: gh_src
 
 build:
-  # scipy 1.14 is py310+
-  skip: true  # [py<310]
+  skip: true  # [py<39]
   number: 0
   script:
     # build extra modules
-    # https://github.com/PreferredAI/cornac/blob/v2.2.2/setup.py#L328
+    # https://github.com/PreferredAI/cornac/blob/v2.3.3/setup.py#
     - {{ PYTHON }} setup.py build_ext -j{{ CPU_COUNT }}
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   ignore_run_exports:
@@ -28,7 +27,6 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
     - llvm-openmp 14.0.6 # [osx and arm64]
@@ -38,11 +36,11 @@ requirements:
     - wheel
     - cython >=0.29.21
     - numpy {{ numpy }}
-    # scipy 1.15.2 has issues with cimports of
-    # scipy.linalg.cython_blas, 1.1[34].* are OK but
-    # - 1.13 does not support py313
-    # - 1.14 does not support py39
-    - scipy 1.14.1
+    # We now require a numpy 2.[01] compatible scipy, ie >=1.13.1=*_1
+    - scipy 1.13.1      # [py<313]
+    - scipy 1.14.1      # [py>=313]
+    # libgomp isn't obvious but you'll get an overdepending error
+    # against cpython .so files without it
     - libgomp 11.2.0    # [linux]
   run:
     - llvm-openmp # [osx and arm64]
