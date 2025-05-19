@@ -59,7 +59,6 @@ test:
   requires:
     - pip
     - pytest
-    # - pytest-pep8 # unavailable
     - pytest-xdist
     # flask required to test the models (not mentioned
     # in the requirements, but in the tests)
