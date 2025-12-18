@@ -17,11 +17,6 @@ build:
     - {{ PYTHON }} setup.py build_ext -j{{ CPU_COUNT }}
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<39]
-  #ignore_run_exports:
-  #  - numpy
-  #  - libgomp      # [linux]
-  #  - llvm-openmp  # [osx and arm64]
-  #  - libcxx
 
 requirements:
   build:
@@ -35,14 +30,8 @@ requirements:
     - wheel
     - cython >=0.29.21
     - numpy {{ numpy }}
-    # We now require a numpy 2.[01] compatible scipy, ie >=1.13.1=*_1
     - scipy
-    #1.13.1
-    # [py<313]
-    #- scipy 1.14.1      # [py>=313]
-    # libgomp isn't obvious but you'll get an overdepending error
-    # against cpython .so files without it
-    - libgomp 15.2.0    # [linux]
+    - libgomp 14.3.0    # [linux]
     - llvm-openmp 20.1.8 # [osx and arm64]
   run:
     - python
