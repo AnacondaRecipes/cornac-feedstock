@@ -31,9 +31,9 @@ requirements:
     - cython >=0.29.21
     - numpy {{ numpy }}
     - scipy
-    - libgomp 14.3.0    # [linux]
-    - llvm-openmp 20.1.8 # [osx or (win and arm64)]
-    - vcomp14 # [win and x86_64]
+    - libgomp      # [linux]
+    - llvm-openmp  # [osx or (win and arm64)]
+    - vcomp14      # [win and x86_64]
 
   run:
     - python
