@@ -10,7 +10,7 @@ source:
   sha256: 8211143def7cbd09689ff3fc853228172a08bc60610032e8391c74a891ef1ed8
 
 build:
-  number: 0
+  number: 1
   script:
     # build extra modules
     # https://github.com/PreferredAI/cornac/blob/v2.3.5/setup.py#
@@ -32,7 +32,9 @@ requirements:
     - numpy {{ numpy }}
     - scipy
     - libgomp 14.3.0    # [linux]
-    - llvm-openmp 20.1.8 # [osx and arm64]
+    - llvm-openmp 20.1.8 # [osx or (win and arm64)]
+    - vcomp14 # [win and x86_64]
+
   run:
     - python
     # add further pinnings for numpy and scipy
@@ -41,7 +43,8 @@ requirements:
     - tqdm
     - powerlaw
     - libgomp     # [linux]
-    - llvm-openmp # [osx and arm64]
+    - llvm-openmp # [osx or (win and arm64)]
+    - vcomp14     # [win and x86_64]
 test:
   source_files:
     - tests
