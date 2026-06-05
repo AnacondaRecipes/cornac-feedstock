@@ -61,7 +61,7 @@ test:
     - flask
 
 about:
-  home: https://cornac.preferred.ai
+  home: https://cornac.readthedocs.io/
   license: Apache-2.0
   license_file: LICENSE
   license_family: Apache
