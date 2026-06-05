@@ -1,22 +1,22 @@
 {% set name = "cornac" %}
-{% set version = "2.3.5" %}
+{% set version = "2.4.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://github.com/PreferredAI/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 8211143def7cbd09689ff3fc853228172a08bc60610032e8391c74a891ef1ed8
+  sha256: 08e8caeeea1ea43f76871d15154efdff1897adbce4b9763fb256c3cf12fffa8c
 
 build:
-  number: 1
+  number: 0
   script:
     # build extra modules
-    # https://github.com/PreferredAI/cornac/blob/v2.3.5/setup.py#
+    # https://github.com/PreferredAI/cornac/blob/v2.4.0/setup.py#
     - {{ PYTHON }} setup.py build_ext -j{{ CPU_COUNT }}
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   build:
@@ -34,7 +34,6 @@ requirements:
     - libgomp      # [linux]
     - llvm-openmp  # [osx or (win and arm64)]
     - vcomp14      # [win and x86_64]
-
   run:
     - python
     # add further pinnings for numpy and scipy
@@ -45,6 +44,7 @@ requirements:
     - libgomp     # [linux]
     - llvm-openmp # [osx or (win and arm64)]
     - vcomp14     # [win and x86_64]
+
 test:
   source_files:
     - tests
@@ -61,7 +61,7 @@ test:
     - flask
 
 about:
-  home: https://cornac.preferred.ai
+  home: https://cornac.readthedocs.io/
   license: Apache-2.0
   license_file: LICENSE
   license_family: Apache
