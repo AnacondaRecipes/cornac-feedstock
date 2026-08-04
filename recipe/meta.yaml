@@ -1,5 +1,5 @@
 {% set name = "cornac" %}
-{% set version = "2.4.0" %}
+{% set version = "2.6.0" %}
 
 package:
   name: {{ name }}
@@ -7,14 +7,14 @@ package:
 
 source:
   url: https://github.com/PreferredAI/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 08e8caeeea1ea43f76871d15154efdff1897adbce4b9763fb256c3cf12fffa8c
+  sha256: 910736b58f7baf4cc87128fef119a2d30f8daa42fcff50b994f81559f554f147
 
 build:
   number: 0
   script:
     # build extra modules
     # https://github.com/PreferredAI/cornac/blob/v2.4.0/setup.py#
-    - {{ PYTHON }} setup.py build_ext -j{{ CPU_COUNT }}
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<310]
 
@@ -31,9 +31,10 @@ requirements:
     - cython >=0.29.21
     - numpy {{ numpy }}
     - scipy
-    - libgomp      # [linux]
+    - libgomp  # [linux]
     - llvm-openmp  # [osx or (win and arm64)]
-    - vcomp14      # [win and x86_64]
+    - vcomp14  # [win and x86_64]
+    - numpy >2.0.0
   run:
     - python
     # add further pinnings for numpy and scipy
@@ -41,9 +42,10 @@ requirements:
     - scipy
     - tqdm
     - powerlaw
-    - libgomp     # [linux]
-    - llvm-openmp # [osx or (win and arm64)]
-    - vcomp14     # [win and x86_64]
+    - libgomp  # [linux]
+    - llvm-openmp  # [osx or (win and arm64)]
+    - vcomp14  # [win and x86_64]
+    - {{ pin_compatible('numpy') }}
 
 test:
   source_files:
