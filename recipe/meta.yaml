@@ -1,5 +1,5 @@
 {% set name = "cornac" %}
-{% set version = "2.4.0" %}
+{% set version = "2.6.0" %}
 
 package:
   name: {{ name }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://github.com/PreferredAI/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 08e8caeeea1ea43f76871d15154efdff1897adbce4b9763fb256c3cf12fffa8c
+  sha256: 910736b58f7baf4cc87128fef119a2d30f8daa42fcff50b994f81559f554f147
 
 build:
   number: 0
   script:
     # build extra modules
-    # https://github.com/PreferredAI/cornac/blob/v2.4.0/setup.py#
+    # https://github.com/PreferredAI/cornac/blob/v2.6.0/setup.py#
     - {{ PYTHON }} setup.py build_ext -j{{ CPU_COUNT }}
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<310]
@@ -76,3 +76,6 @@ about:
 extra:
   recipe-maintainers:
     - tqtg
+  skip-lints:
+    # setup.py build_ext is intentionally used for Cornac's compiled extension
+    - deprecated_python_install_command
