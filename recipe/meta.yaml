@@ -1,5 +1,5 @@
 {% set name = "cornac" %}
-{% set version = "2.6.0" %}
+{% set version = "3.0.1" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/PreferredAI/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 910736b58f7baf4cc87128fef119a2d30f8daa42fcff50b994f81559f554f147
+  sha256: 67b4a6638fcb3c530275f0d5bddd2dc95686db44758b0f1a3879d99b3dc6288d
 
 build:
   number: 0
@@ -31,9 +31,10 @@ requirements:
     - cython >=0.29.21
     - numpy {{ numpy }}
     - scipy
-    - libgomp      # [linux]
+    - libgomp  # [linux]
     - llvm-openmp  # [osx or (win and arm64)]
-    - vcomp14      # [win and x86_64]
+    - vcomp14  # [win and x86_64]
+    - numpy >2.0.0
   run:
     - python
     # add further pinnings for numpy and scipy
@@ -41,9 +42,10 @@ requirements:
     - scipy
     - tqdm
     - powerlaw
-    - libgomp     # [linux]
-    - llvm-openmp # [osx or (win and arm64)]
-    - vcomp14     # [win and x86_64]
+    - libgomp  # [linux]
+    - llvm-openmp  # [osx or (win and arm64)]
+    - vcomp14  # [win and x86_64]
+    - {{ pin_compatible('numpy') }}
 
 test:
   source_files:
