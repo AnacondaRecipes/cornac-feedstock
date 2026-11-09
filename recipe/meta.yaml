@@ -69,7 +69,7 @@ test:
     - flask
 
 about:
-  home: https://cornac.preferred.ai/
+  home: https://cornac.readthedocs.io
   license: Apache-2.0
   license_file: LICENSE
   license_family: Apache
@@ -87,3 +87,4 @@ extra:
   skip-lints:
     # setup.py build_ext is intentionally used for Cornac's compiled extension
     - deprecated_python_install_command
+    - host_section_needs_exact_pinnings
